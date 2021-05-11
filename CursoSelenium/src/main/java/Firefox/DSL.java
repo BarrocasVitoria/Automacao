@@ -2,6 +2,8 @@ package Firefox;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class DSL {
 
@@ -26,5 +28,17 @@ public class DSL {
 	
 	public boolean isRadioMarcado(String id) {
 		return driver.findElement(By.id(id)).isSelected();
+	}
+	
+	public void selecionarCombo(String id, String valor) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		combo.selectByVisibleText(valor);
+	}
+	
+	public String obterValorCombo(String id) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		return combo.getFirstSelectedOption().getText();
 	}
 }
