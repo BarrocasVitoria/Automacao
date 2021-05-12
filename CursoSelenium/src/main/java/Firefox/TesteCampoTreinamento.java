@@ -84,12 +84,12 @@ public class TesteCampoTreinamento {
 
 	@Test
 	public void deveVericarValoresComboMultiplo() {
+		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
+		dsl.selecionarCombo("elementosForm:esportes", "Corrida");
+		dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
+		
 		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
 		Select combo = new Select(element);
-		combo.selectByVisibleText("Natacao");
-		combo.selectByVisibleText("Corrida");
-		combo.selectByVisibleText("O que eh esporte?");
-
 		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
 		Assert.assertEquals(3, allSelectedOptions.size());
 
@@ -101,28 +101,30 @@ public class TesteCampoTreinamento {
 	}
 
 	@Test
-	public void deveInteragirComBotoens() {
+	public void deveInteragirComBotoes() {
+		dsl.clicarBotao("buttonSimple");
+		
 		WebElement botao = driver.findElement(By.id("buttonSimple"));
-		botao.click();
-
 		Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
 
 	}
 
 	@Test
 	public void deveInteragirComLinks() {
-		driver.findElement(By.linkText("Voltar")).click();
+		dsl.clicarLink("Voltar");
 
-		Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
+		Assert.assertEquals("Voltou!", dsl.obterTexto("resultado"));
 
 	}
 
 	@Test
 	public void deveBuscarTextosNaPagina() {
-//		Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
-		Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+//		Assert.assertTrue(driver.findElement(By.tagName("body"))
+//		       .getText().contains("Campo de Treinamento"));
+		Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
+		
 		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",
-				driver.findElement(By.className("facilAchar")).getText());
+				dsl.obterTexto(By.className("facilAchar")));
 
 	}
 }
